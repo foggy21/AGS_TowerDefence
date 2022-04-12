@@ -10,7 +10,7 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private LayerMask Ground;
     [SerializeField] private LayerMask Ladder;
 
-    private void Start()
+    private void Awake()
     {
         _playerModel = new PlayerModel
         {
@@ -18,13 +18,15 @@ public class PlayerView : MonoBehaviour
             LayerChecker = transform.GetChild(0),
         };
         PlayerModel.CanMove = true;
-        
     }
 
     public void Move()
     {
-        if (_playerModel.HorizontalInput > 0 || _playerModel.HorizontalInput < 0)
+        if ((_playerModel.HorizontalInput > 0 || _playerModel.HorizontalInput < 0))
+        {
             _playerModel.Rigidbody.velocity = new Vector2(_playerModel.HorizontalInput * _playerModel.Speed, _playerModel.Rigidbody.velocity.y);
+        }
+            
     }
 
     public void Jump()
@@ -42,7 +44,12 @@ public class PlayerView : MonoBehaviour
             if (_playerModel.VerticalInput > 0 || _playerModel.VerticalInput < 0)
                 _playerModel.Rigidbody.velocity = new Vector2(_playerModel.Rigidbody.velocity.x, _playerModel.VerticalInput * _playerModel.Speed);
         }
-    } 
+    }
+
+    public void FixedPosition()
+    {
+        _playerModel.Rigidbody.velocity = Vector2.zero;
+    }
 
     private bool CheckGround(Transform groundChecker, float circleRadiusCheckingGround)
     {

@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerView : MonoBehaviour
+public class TowerManagment: MonoBehaviour
 {
-    private PlayerModel _playerModel = new PlayerModel();
+    private void Awake()
+    {
+        GlobalEventManager.OnCloseTowerMenu.AddListener(CloseTowerMenu);
+    }
 
     private void Update()
     {
@@ -29,7 +32,7 @@ public class TowerView : MonoBehaviour
         }
     } 
 
-    private void CloseTowerMenu()
+    public void CloseTowerMenu()
     {
         PlayerModel.CanMove = true;
         for (int i = 0; i < transform.childCount; ++i)
