@@ -3,9 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerModel
 {
-    private float _circleRadiusCheckingLayer = 0.3f;
-    private float _speed = 5;
-    private float _jumpForce = 5;
+    private float _circleRadiusCheckingLayer = 0.254f;
+    private float _speed = 5f;
+    private float _jumpForce = 7f;
     public static bool CanMove { get; set; }
     public static bool CanBuild { get; set; }
     public float CircleRadiusCheckingLayer => _circleRadiusCheckingLayer;

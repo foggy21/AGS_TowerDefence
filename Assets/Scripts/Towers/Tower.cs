@@ -27,10 +27,6 @@ public abstract class Tower : MonoBehaviour
         {
             PlayerModel.CanBuild = false;
         }
-        else
-        {
-            PlayerModel.CanBuild = true;
-        }
     }
     public abstract GameObject FindEnemy();
 }

@@ -4,59 +4,52 @@ using UnityEngine;
 
 public class PlayerView : MonoBehaviour
 {
-    private PlayerModel _playerModel;
-
     [Header("Layers")]
     [SerializeField] private LayerMask Ground;
     [SerializeField] private LayerMask Ladder;
 
     private void Awake()
     {
-        _playerModel = new PlayerModel
-        {
-            Rigidbody = GetComponent<Rigidbody2D>(),
-            LayerChecker = transform.GetChild(0),
-        };
         PlayerModel.CanMove = true;
     }
 
-    public void Move()
+    public void Move(Rigidbody2D rigidbody2D, float HorizontalInput, float speed)
     {
-        if ((_playerModel.HorizontalInput > 0 || _playerModel.HorizontalInput < 0))
+        if (HorizontalInput > 0 || HorizontalInput < 0)
         {
-            _playerModel.Rigidbody.velocity = new Vector2(_playerModel.HorizontalInput * _playerModel.Speed, _playerModel.Rigidbody.velocity.y);
-        }
-            
-    }
-
-    public void Jump()
-    {
-        if (CheckGround(_playerModel.LayerChecker, _playerModel.CircleRadiusCheckingLayer))
-        {
-            _playerModel.Rigidbody.AddForce(_playerModel.JumpForce * _playerModel.JumpInput * Vector2.up, ForceMode2D.Impulse);
+            rigidbody2D.velocity = new Vector2(HorizontalInput * speed, rigidbody2D.velocity.y);
         }
     }
 
-    public void Climb()
+    public void Jump(Rigidbody2D rigidbody2D, float jumpInput, float jumpForce, Transform layerChecker, float circleRadiusCheckingLayer)
     {
-        if (CheckLadder(_playerModel.LayerChecker, _playerModel.CircleRadiusCheckingLayer))
+        if (CheckGround(layerChecker, circleRadiusCheckingLayer))
         {
-            if (_playerModel.VerticalInput > 0 || _playerModel.VerticalInput < 0)
-                _playerModel.Rigidbody.velocity = new Vector2(_playerModel.Rigidbody.velocity.x, _playerModel.VerticalInput * _playerModel.Speed);
+            rigidbody2D.AddForce(jumpForce * jumpInput * Vector2.up, ForceMode2D.Impulse);
         }
     }
 
-    public void FixedPosition()
+    public void Climb(Rigidbody2D rigidbody2D, float verticalInput, float speed, Transform layerChecker, float circleRadiusCheckingLayer)
     {
-        _playerModel.Rigidbody.velocity = Vector2.zero;
+        if (CheckLadder(layerChecker, circleRadiusCheckingLayer))
+        {
+            if (verticalInput > 0 || verticalInput < 0)
+                rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, verticalInput * speed);
+        }
     }
 
-    private bool CheckGround(Transform groundChecker, float circleRadiusCheckingGround)
+    
+    public void FixedPosition(Rigidbody2D rigidbody2D)
+    {
+        rigidbody2D.velocity = Vector2.zero;
+    }
+
+    public bool CheckGround(Transform groundChecker, float circleRadiusCheckingGround)
     {
         return Physics2D.OverlapCircle(groundChecker.position, circleRadiusCheckingGround, Ground);
     }
 
-    private bool CheckLadder(Transform ladderChecker, float circleRadiusCheckingLadder)
+    public bool CheckLadder(Transform ladderChecker, float circleRadiusCheckingLadder)
     {
         return Physics2D.OverlapCircle(ladderChecker.position, circleRadiusCheckingLadder, Ladder);
     }
