@@ -3,18 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Fireball : Projectile
-{
+{ 
     private const float _speed = 8f;
 
     private void Awake()
     {
+        GlobalEventManager.OnSetEnemy.AddListener(SetEnemy);
         Damage = 5f;
-        GlobalEventManager.OnGetEnemy.AddListener(GetEnemy);
+    }
+
+    private void Start()
+    {
+        CurrentEnemy = Enemy;
     }
 
     private void FixedUpdate()
     {
-        transform.position = Vector2.MoveTowards(transform.position, Enemy.transform.position, _speed * Time.deltaTime);
+        if (CurrentEnemy != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, CurrentEnemy.transform.position, _speed * Time.deltaTime);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

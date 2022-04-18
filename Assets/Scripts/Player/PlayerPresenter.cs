@@ -7,6 +7,7 @@ public class PlayerPresenter : MonoBehaviour
     private void Start()
     {
         _playerView = GetComponent<PlayerView>();
+        PlayerModel.CanBuild = true;
     }
 
     private void FixedUpdate()
@@ -25,7 +26,10 @@ public class PlayerPresenter : MonoBehaviour
 
     public void BuildTower(string Tower)
     {
-        Instantiate(Resources.Load<GameObject>(Tower), new Vector2(transform.position.x, transform.position.y - 1f), Quaternion.identity);
+        if (PlayerModel.CanBuild)
+        {
+            Instantiate(Resources.Load<GameObject>(Tower), new Vector2(transform.position.x, transform.position.y - 1f), Quaternion.identity);
+        }
         GlobalEventManager.CloseTowerMenu();
     }
 }

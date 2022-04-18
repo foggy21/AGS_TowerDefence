@@ -129,6 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ba95199a4ff944db1ff9acc26de57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerMask:
+    serializedVersion: 2
+    m_Bits: 512
   EnemyMask:
     serializedVersion: 2
     m_Bits: 256

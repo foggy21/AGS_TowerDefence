@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - TextOfCountEnemies
+  - Movepoint
+  - Crystal
   layers:
   - Default
   - TransparentFX
@@ -15,7 +18,7 @@ TagManager:
   - Ground
   - Ladder
   - Enemy
-  - 
+  - Player
   - 
   - 
   - 

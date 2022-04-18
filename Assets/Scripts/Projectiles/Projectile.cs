@@ -4,14 +4,12 @@ using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
-    public static GameObject Enemy { get; set; }
+    public GameObject Enemy { get; set; }
+    public GameObject CurrentEnemy { get; set; }
     protected float Damage { get; set; }
 
-
-    public void GetEnemy(GameObject enemy)
+    public void SetEnemy(GameObject enemy)
     {
         Enemy = enemy;
     }
-
-
 }

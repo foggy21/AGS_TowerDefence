@@ -7,6 +7,7 @@ public class PlayerModel
     private float _speed = 5;
     private float _jumpForce = 5;
     public static bool CanMove { get; set; }
+    public static bool CanBuild { get; set; }
     public float CircleRadiusCheckingLayer => _circleRadiusCheckingLayer;
     public float HorizontalInput => Input.GetAxis("Horizontal");
     public float VerticalInput => Input.GetAxis("Vertical");

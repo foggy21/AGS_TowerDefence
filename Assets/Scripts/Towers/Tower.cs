@@ -4,52 +4,33 @@ using UnityEngine;
 
 public abstract class Tower : MonoBehaviour
 {
+    protected string projectileName { get; set; }
     protected float OffsetAttackX { get; set; }
     protected float OffsetAttackY { get; set; }
-    protected float DistanceAttack { get; set; }
+    protected float RadiusAttack { get; set; }
+    protected float BuildingProhibitionDistance { get; set; }
     protected float DelayAttack { get; set; }
     protected float CurrentDelayAttack { get; set; }
-    protected List<GameObject> ListOfEnemies { get; set; }
     protected GameObject Enemy { get; set; }
-    protected GameObject TargetEnemy { get; set; }
 
-    [Header("Layers")]
-    [SerializeField] private LayerMask EnemyMask;
-    public abstract void Attack(GameObject Enemy, string ProjectileName);
+    [Header("Abstract Layers")]
+    [SerializeField] private LayerMask PlayerMask;
+    [SerializeField] protected LayerMask EnemyMask;
+    public abstract void Attack(GameObject Enemy);
 
-    public GameObject FindEnemy()
+    public void DisablePlayerBuildSkill()
     {
-        RaycastHit2D raycastRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.right, DistanceAttack, EnemyMask);
-        RaycastHit2D raycastLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.left, DistanceAttack, EnemyMask);
+        RaycastHit2D raycastRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.right, BuildingProhibitionDistance, PlayerMask);
+        RaycastHit2D raycastLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.left, BuildingProhibitionDistance, PlayerMask);
 
-        if (raycastLeft.collider != null)
+        if (raycastLeft.collider != null || raycastRight.collider != null)
         {
-            return raycastLeft.collider.gameObject;
+            PlayerModel.CanBuild = false;
         }
-        if (raycastRight.collider != null)
+        else
         {
-            return raycastRight.collider.gameObject;
+            PlayerModel.CanBuild = true;
         }
-
-        return null;
     }
-
-    public GameObject ChooseEnemy(List<GameObject> listOfEnemies)
-    {
-        TargetEnemy = listOfEnemies[0];
-        return TargetEnemy;
-    }
-
-    public List<GameObject> RegisterNewEnemy(List<GameObject> listOfEnemies, GameObject newEnemy)
-    {
-        listOfEnemies.Add(newEnemy);
-        return listOfEnemies;
-    }
-
-    public List<GameObject> UnregisterEnemy(List<GameObject> listOfEnemies, GameObject enemy)
-    {
-        listOfEnemies.Remove(enemy);
-        return listOfEnemies;
-    }
-
+    public abstract GameObject FindEnemy();
 }
