@@ -9,7 +9,7 @@ public class Fireball : Projectile
     private void Awake()
     {
         GlobalEventManager.OnSetEnemy.AddListener(SetEnemy);
-        Damage = 5f;
+        Damage = 1;
     }
 
     private void Start()
@@ -27,15 +27,14 @@ public class Fireball : Projectile
         {
             Destroy(gameObject);
         }
-
-        
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy")
         {
+            MoveableEnemy enemy = collision.GetComponent<MoveableEnemy>();
+            GlobalEventManager.GetDamage(enemy, Damage);
             Destroy(gameObject);
         }
     }
