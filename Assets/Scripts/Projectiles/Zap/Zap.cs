@@ -19,31 +19,35 @@ public class Zap : Projectile
     private void Start()
     {
         Enemy = transform.parent.GetComponent<MoveableEnemy>();
+        Debug.Log(Enemy.gameObject.name + " " + CountOfZaps);
         Damage = 1;
         StartCoroutine(Electrify(Enemy));
-        
     }
     
     private void ZapNextEnemy(MoveableEnemy enemy, float distanceAttack, int countOfZaps)
     {
-        if (FindNextEnemy(enemy, distanceAttack) != null)
+        GameObject nextEnemy = FindNextEnemy(enemy, distanceAttack);
+        if (nextEnemy != null)
         {
             _nextZap = Resources.Load<Zap>("Zap");
+            Instantiate(_nextZap, nextEnemy.transform);
             _nextZap.CountOfZaps = countOfZaps + 1;
-            Instantiate(_nextZap, enemy.transform);
+
         }
     }
 
     private GameObject FindNextEnemy(MoveableEnemy enemy, float distanceAttack)
     {
-        RaycastHit2D raycastLeft = Physics2D.Raycast(new Vector2(enemy.transform.position.x - 1.1f, enemy.transform.position.y), Vector2.left, distanceAttack, EnemyMask);
-        RaycastHit2D raycastRight = Physics2D.Raycast(new Vector2(enemy.transform.position.x + 1.1f, enemy.transform.position.y), Vector2.right, distanceAttack, EnemyMask);
+        Debug.DrawRay(new Vector2(enemy.transform.position.x + 1.1f, transform.position.y), Vector2.right * distanceAttack);
+        Debug.DrawRay(new Vector2(enemy.transform.position.x - 1.1f, transform.position.y), Vector2.left * distanceAttack);
+        RaycastHit2D raycastLeft = Physics2D.Raycast(new Vector2(enemy.transform.position.x - 1.1f, transform.position.y), Vector2.left, distanceAttack, EnemyMask);
+        RaycastHit2D raycastRight = Physics2D.Raycast(new Vector2(enemy.transform.position.x + 1.1f, transform.position.y), Vector2.right, distanceAttack, EnemyMask);
        
-        if (raycastLeft.collider != null && raycastLeft.collider.gameObject.GetComponent<MoveableEnemy>() != enemy)
+        if (raycastLeft.collider != null)
         {
             return raycastLeft.collider.gameObject;
         }
-        else if (raycastRight.collider != null && raycastRight.collider.gameObject.GetComponent<MoveableEnemy>() != enemy)
+        else if (raycastRight.collider != null)
         {
             return raycastRight.collider.gameObject;
         }
@@ -58,18 +62,18 @@ public class Zap : Projectile
         enemy.CanMove = false;
         enemy.CurrentHealth -= Damage;
         SpriteRenderer sprite = enemy.GetComponentInChildren<SpriteRenderer>();
-        Color blue = Color.blue;
-        sprite.color = blue;
+        sprite.color = Color.blue;
         yield return new WaitForSeconds(0.3f);
         if (Enemy)
         {
             Debug.Log("End Coroutine");
             sprite.color = enemy.DefaultColor;
             enemy.CanMove = true;
-        }
-        if (Enemy && CountOfZaps < LimitsOfZaps)
-        {
-            ZapNextEnemy(Enemy, DistanceAttack, CountOfZaps);
+            Debug.Log(CountOfZaps);
+            if (CountOfZaps < LimitsOfZaps)
+            {
+                ZapNextEnemy(Enemy, DistanceAttack, CountOfZaps);
+            }
         }
         Destroy(gameObject);
     }
@@ -78,6 +82,6 @@ public class Zap : Projectile
     {
         CountOfZaps = countOfZaps;
         LimitsOfZaps = limitOfZaps;
-        DistanceAttack = distanceOfAttack/2;
+        DistanceAttack = distanceOfAttack;
     }
 }

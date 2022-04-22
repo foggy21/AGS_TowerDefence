@@ -9,7 +9,10 @@ public class MoveableEnemy : MonoBehaviour
     
     
     public Color DefaultColor { get; set; }
+
     public int CurrentHealth { get; set; }
+    public float DefaultSpeed => _enemyModel.Speed;
+    public float CurrentSpeed { get; set; }
     public bool CanMove { get; set; }
     private void Start()
     {
@@ -18,6 +21,7 @@ public class MoveableEnemy : MonoBehaviour
         _enemyModel.Health = 2;
         _enemyModel.Sprite = GetComponentInChildren<SpriteRenderer>();
         CanMove = true;
+        CurrentSpeed = DefaultSpeed;
         DefaultColor = _enemyModel.Sprite.color;
         CurrentHealth = _enemyModel.Health;
         _enemyModel.VisitedPoints = new List<GameObject>();
@@ -27,6 +31,7 @@ public class MoveableEnemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        //Debug.Log(CurrentSpeed);
         if (CurrentHealth <= 0)
         {
             GlobalEventManager.DecrementCountEnemies();
@@ -38,7 +43,7 @@ public class MoveableEnemy : MonoBehaviour
         }
         if (!_enemyModel._changeMovePoint && CanMove)
         {
-            _enemyView.MoveToPoint(_enemyModel.CurrentMovePoint, _enemyModel.Rigidbody, _enemyModel.Speed, ref _enemyModel._changeMovePoint, _enemyModel.LayerChecker, _enemyModel.CircleRadiusCheckingLayer);
+            _enemyView.MoveToPoint(_enemyModel.CurrentMovePoint, _enemyModel.Rigidbody, CurrentSpeed, ref _enemyModel._changeMovePoint, _enemyModel.LayerChecker, _enemyModel.CircleRadiusCheckingLayer);
             if (transform.position.x < _enemyModel.CurrentMovePoint.position.x)
             {
                 _enemyModel.Sprite.flipX = true;

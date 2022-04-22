@@ -5,7 +5,7 @@ public class PlayerModel
 {
     private float _circleRadiusCheckingLayer = 0.3f;
     private float _speed = 5f;
-    private float _jumpForce = 8.5f;
+    private float _jumpForce = 11f;
     public static bool CanMove { get; set; }
     public static bool CanBuild { get; set; }
     public float CircleRadiusCheckingLayer => _circleRadiusCheckingLayer;
