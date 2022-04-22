@@ -31,7 +31,6 @@ public class MoveableEnemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //Debug.Log(CurrentSpeed);
         if (CurrentHealth <= 0)
         {
             GlobalEventManager.DecrementCountEnemies();

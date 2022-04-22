@@ -10,6 +10,7 @@ public class SlowedTower : Tower
     void Start()
     {
         DistanceAttack = 8f;
+        BuildingProhibitionDistance = 3.5f;
         _slowSpeedCoef = 2.15f;
         OffsetAttackY = 1.2f;
         _listOfEnemies = new List<MoveableEnemy>();
@@ -28,7 +29,7 @@ public class SlowedTower : Tower
         {
             for (int i = 0; i < _listOfEnemies.Count; ++i)
             {
-                if (Vector2.Distance(transform.position, _listOfEnemies[i].transform.position) < DistanceAttack && _listOfEnemies[i].CurrentSpeed != _listOfEnemies[i].DefaultSpeed)
+                if (_listOfEnemies[i] != null && Vector2.Distance(transform.position, _listOfEnemies[i].transform.position) < DistanceAttack && _listOfEnemies[i].CurrentSpeed == _listOfEnemies[i].DefaultSpeed)
                 {
                     _listOfEnemies[i].CurrentSpeed /= _slowSpeedCoef;
                 }
@@ -38,6 +39,7 @@ public class SlowedTower : Tower
 
     private void FindEnemies()
     {
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.right * DistanceAttack);
         RaycastHit2D[] raycastLeft = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.left, DistanceAttack, EnemyMask);
         RaycastHit2D[] raycastRight = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.right, DistanceAttack, EnemyMask);
 
@@ -69,6 +71,12 @@ public class SlowedTower : Tower
     {
         for (int i = 0; i < _listOfEnemies.Count; ++i)
         {
+            if (_listOfEnemies[i] == null)
+            {
+                _listOfEnemies.Remove(_listOfEnemies[i]);
+                continue;
+            }
+
             if (Vector2.Distance(transform.position, _listOfEnemies[i].transform.position) >= DistanceAttack)
             {
                 _listOfEnemies[i].CurrentSpeed = _listOfEnemies[i].DefaultSpeed;
