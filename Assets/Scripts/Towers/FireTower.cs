@@ -9,7 +9,7 @@ public class FireTower : Tower
         Enemy = null;
         OffsetAttackX = 1f;
         OffsetAttackY = 1.2f;
-        RadiusAttack = 10f;
+        DistanceAttack = 10f;
         BuildingProhibitionDistance = 5f;
         DelayAttack = 1f;
     }
@@ -24,7 +24,7 @@ public class FireTower : Tower
             CurrentDelayAttack = 0;
         }
 
-        if (Enemy != null && Vector2.Distance(transform.position, Enemy.transform.position) < RadiusAttack)
+        if (Enemy != null && Vector2.Distance(transform.position, Enemy.transform.position) < DistanceAttack)
         {
             if (CurrentDelayAttack <= 0)
             {
@@ -35,10 +35,14 @@ public class FireTower : Tower
             {
                 CurrentDelayAttack -= Time.deltaTime;
             }
+        } 
+        else if (Enemy != null && Vector2.Distance(transform.position, Enemy.transform.position) >= DistanceAttack)
+        {
+            Enemy = null;
         }
     }
 
-    public override void Attack(GameObject enemy)
+    public override void Attack(MoveableEnemy enemy)
     {
         if (enemy != null)
         {
@@ -56,14 +60,12 @@ public class FireTower : Tower
         }
     }
 
-    public override GameObject FindEnemy()
+    public override MoveableEnemy FindEnemy()
     {
-        Debug.Log(transform.position + " " + RadiusAttack + " " + EnemyMask.value);
-        Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, RadiusAttack, EnemyMask);
+        Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, DistanceAttack, EnemyMask);
         if (enemyCollider != null)
         {
-            Debug.Log(enemyCollider.gameObject);
-            return enemyCollider.gameObject;
+            return enemyCollider.gameObject.GetComponent<MoveableEnemy>();
         }
         return null;
         

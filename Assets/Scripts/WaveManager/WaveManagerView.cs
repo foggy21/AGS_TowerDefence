@@ -26,4 +26,6 @@ public class WaveManagerView : MonoBehaviour
         spawn.LimitEnemies = limitValue;
     }
 
+    
+
 }

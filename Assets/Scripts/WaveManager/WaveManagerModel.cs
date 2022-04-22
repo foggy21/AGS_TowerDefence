@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class WaveManagerModel { 
     public Spawn[] _spawns;
-    public int _currentCountEnemies = 0;
+    public static int _currentCountEnemies = 0;
     private float _timeForPauseBetweenWaves = 10f;
     public Text _textOfCountEnemies { get; set; }
     public int TotalLimitEnemies { get; set; }

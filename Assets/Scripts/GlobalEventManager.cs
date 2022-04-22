@@ -5,27 +5,40 @@ using UnityEngine.UI;
 public class GlobalEventManager : MonoBehaviour
 {
     public static UnityEvent OnCloseTowerMenu = new UnityEvent();
-    public static UnityEvent<GameObject> OnSetEnemy = new UnityEvent<GameObject>();
+    public static UnityEvent OnDecrementCountEnemies = new UnityEvent();
+    public static UnityEvent<MoveableEnemy> OnSetEnemy = new UnityEvent<MoveableEnemy>();
     public static UnityEvent<MoveableEnemy, int> OnGetDamage = new UnityEvent<MoveableEnemy, int>();
+    public static UnityEvent<int, int, float> OnSetNewStats = new UnityEvent<int, int, float>();
 
     public static void CloseTowerMenu()
     {
         OnCloseTowerMenu.Invoke();
     }
 
-    public static void SetEnemy(GameObject enemy)
+    public static void DecrementCountEnemies()
+    {
+        OnDecrementCountEnemies.Invoke();
+    }
+
+    public static void SetEnemy(MoveableEnemy enemy)
     {
         OnSetEnemy.Invoke(enemy);
     }
 
-    public static void GetDamage(MoveableEnemy health, int damage)
+    public static void GetDamage(MoveableEnemy enemy, int damage)
     {
-        OnGetDamage.Invoke(health, damage);
+        OnGetDamage.Invoke(enemy, damage);
+    }
+
+    public static void SetNewStats(int countOfStat, int limitOfStat, float distanceOfStat)
+    {
+        OnSetNewStats.Invoke(countOfStat, limitOfStat, distanceOfStat);
     }
 
     private void Awake()
     {
         OnGetDamage.AddListener(EnemyView.GetDamage);
+        OnDecrementCountEnemies.AddListener(WaveManager.DecrementCountEnemies);
         DontDestroyOnLoad(gameObject);
     }
 }

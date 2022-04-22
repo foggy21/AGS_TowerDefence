@@ -21,12 +21,12 @@ public class WaveManager : MonoBehaviour
     {
         if (_waveManagerModel.IsPause == false)
         {
-            _waveManagerModel._textOfCountEnemies.text = _waveManagerModel._currentCountEnemies.ToString();
+            _waveManagerModel._textOfCountEnemies.text = WaveManagerModel._currentCountEnemies.ToString();
         } else
         {
             _waveManagerModel.CurrentTimeForPauseBetweenWaves -= Time.deltaTime;
         }
-        if (_waveManagerModel._currentCountEnemies == 0 && _waveManagerModel.IsPause == false)
+        if (WaveManagerModel._currentCountEnemies == 0 && _waveManagerModel.IsPause == false)
         {
             _waveManagerModel.IsPause = true;
             _waveManagerModel.CurrentTimeForPauseBetweenWaves = _waveManagerModel.TimeForPauseBetweenWave;
@@ -34,7 +34,12 @@ public class WaveManager : MonoBehaviour
         else if (_waveManagerModel.CurrentTimeForPauseBetweenWaves <= 0 && _waveManagerModel.IsPause == true)
         {
             _waveManagerModel.IsPause = false;
-            _waveManagerView.StartToSpawnEnemies(_waveManagerModel._spawns, _waveManagerModel.TotalLimitEnemies, ref _waveManagerModel._currentCountEnemies);
+            _waveManagerView.StartToSpawnEnemies(_waveManagerModel._spawns, _waveManagerModel.TotalLimitEnemies, ref WaveManagerModel._currentCountEnemies);
         }
+    }
+
+    public static void DecrementCountEnemies()
+    {
+        WaveManagerModel._currentCountEnemies--;
     }
 }

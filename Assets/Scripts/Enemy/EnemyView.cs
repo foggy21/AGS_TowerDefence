@@ -30,7 +30,6 @@ public class EnemyView : MonoBehaviour
                 {
                     continue;
                 }
-                Debug.Log(movePoint[i]);
                 minDistance = distanceToPoint;
                 closedPoint = movePoint[i].transform;
             }
@@ -59,7 +58,6 @@ public class EnemyView : MonoBehaviour
     public static void GetDamage(MoveableEnemy enemy, int damage)
     {
         enemy.CurrentHealth -= damage;
-        Debug.Log(enemy.CurrentHealth);
     }
 
     private void ClimbStair(Transform point, Rigidbody2D rb, float speed, ref bool changePoint)

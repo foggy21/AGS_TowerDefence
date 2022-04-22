@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
-    public GameObject Enemy { get; set; }
-    public GameObject CurrentEnemy { get; set; }
+    public MoveableEnemy Enemy { get; set; }
+    public MoveableEnemy CurrentEnemy { get; set; }
     protected int Damage { get; set; }
 
-    public void SetEnemy(GameObject enemy)
+    public void SetEnemy(MoveableEnemy enemy)
     {
         Enemy = enemy;
     }
