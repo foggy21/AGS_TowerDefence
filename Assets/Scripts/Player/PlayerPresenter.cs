@@ -12,6 +12,9 @@ public class PlayerPresenter : MonoBehaviour
         _playerModel.Rigidbody = GetComponent<Rigidbody2D>();
         _playerModel.Animator = GetComponent<Animator>();
         _playerModel.Sprite = GetComponentInChildren<SpriteRenderer>();
+        _playerModel.PlayerLayer = LayerMask.NameToLayer("Player");
+        _playerModel.GroundLayer = LayerMask.NameToLayer("Ground");
+        Debug.Log(_playerModel.PlayerLayer + " " + _playerModel.GroundLayer);
         PlayerModel.CanBuild = true;
     }
 
@@ -20,8 +23,13 @@ public class PlayerPresenter : MonoBehaviour
         if (PlayerModel.CanMove)
         {
             _playerView.Move(_playerModel.Rigidbody, _playerModel.HorizontalInput, _playerModel.Speed);
-            _playerView.Climb(_playerModel.Rigidbody, _playerModel.VerticalInput, _playerModel.Speed, _playerModel.LayerChecker, _playerModel.CircleRadiusCheckingLayer);
-            _playerView.Jump(_playerModel.Rigidbody, _playerModel.JumpInput, _playerModel.JumpForce, _playerModel.LayerChecker, _playerModel.CircleRadiusCheckingLayer);
+            _playerView.Climb(_playerModel.Rigidbody, _playerModel.VerticalInput, _playerModel.Speed, _playerModel.LayerChecker, _playerModel.CircleRadiusCheckingLayer, _playerModel.PlayerLayer, _playerModel.GroundLayer);
+
+            if (_playerModel.Rigidbody.velocity.y <= 0)
+            {
+                _playerView.Jump(_playerModel.Rigidbody, _playerModel.JumpInput, _playerModel.JumpForce, _playerModel.LayerChecker, _playerModel.CircleRadiusCheckingLayer);
+            }
+
             if (_playerModel.HorizontalInput > 0 || _playerModel.HorizontalInput < 0)
             {
                 _playerModel.Animator.SetBool("CanMove", true);

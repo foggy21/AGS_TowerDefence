@@ -29,14 +29,24 @@ public class PlayerView : MonoBehaviour
         }
     }
 
-    public void Climb(Rigidbody2D rigidbody2D, float verticalInput, float speed, Transform layerChecker, float circleRadiusCheckingLayer)
+    public void Climb(Rigidbody2D rigidbody2D, float verticalInput, float speed, Transform layerChecker, float circleRadiusCheckingLayer, int playerLayer, int groundLayer)
     {
+        
         if (CheckLadder(layerChecker, circleRadiusCheckingLayer))
         {
             if (verticalInput > 0 || verticalInput < 0)
+            {
+                Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, true);
                 rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, verticalInput * speed);
+            }
+                
+        }
+        else
+        {
+            Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
         }
     }
+
 
     
     public void FixedPosition(Rigidbody2D rigidbody2D)

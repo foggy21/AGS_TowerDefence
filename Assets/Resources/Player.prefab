@@ -64,6 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d795ba4cbd36902469ba54c159947272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player:
+    serializedVersion: 2
+    m_Bits: 512
   Ground:
     serializedVersion: 2
     m_Bits: 64
