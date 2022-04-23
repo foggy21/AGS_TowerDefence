@@ -14,7 +14,6 @@ public class PlayerPresenter : MonoBehaviour
         _playerModel.Sprite = GetComponentInChildren<SpriteRenderer>();
         _playerModel.PlayerLayer = LayerMask.NameToLayer("Player");
         _playerModel.GroundLayer = LayerMask.NameToLayer("Ground");
-        Debug.Log(_playerModel.PlayerLayer + " " + _playerModel.GroundLayer);
         PlayerModel.CanBuild = true;
     }
 
