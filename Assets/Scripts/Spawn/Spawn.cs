@@ -16,7 +16,6 @@ public class Spawn : MonoBehaviour
 
     public IEnumerator SpawnEnemy()
     {
-        Debug.Log(LimitEnemies);
         Instantiate(Enemy, transform.position, Quaternion.identity);
         _enemiesOnScreen++;
         yield return new WaitForSeconds(Random.Range(1f, 5f));

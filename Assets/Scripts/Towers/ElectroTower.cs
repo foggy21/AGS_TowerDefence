@@ -8,6 +8,7 @@ public class ElectroTower : Tower
     void Start()
     {
         Enemy = null;
+        Health = 100f;
         OffsetAttackX = 1f;
         OffsetAttackY = 1.2f;
         DistanceAttack = 8f;
@@ -17,7 +18,9 @@ public class ElectroTower : Tower
 
     void FixedUpdate()
     {
+        hpBar.localScale = new Vector2(hpBar.localScale.x, Health / 100);
         //Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.right * DistanceAttack);
+        DestroyTower(Health);
         DisablePlayerBuildSkill();
         if (Enemy == null)
         {

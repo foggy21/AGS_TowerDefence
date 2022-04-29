@@ -19,8 +19,7 @@ public class Zap : Projectile
     private void Start()
     {
         Enemy = transform.parent.GetComponent<MoveableEnemy>();
-        Debug.Log(Enemy.gameObject.name + " " + CountOfZaps);
-        Damage = 1;
+        Damage = 15f;
         StartCoroutine(Electrify(Enemy));
     }
     
@@ -66,10 +65,8 @@ public class Zap : Projectile
         yield return new WaitForSeconds(0.3f);
         if (Enemy)
         {
-            Debug.Log("End Coroutine");
             sprite.color = enemy.DefaultColor;
             enemy.CanMove = true;
-            Debug.Log(CountOfZaps);
             if (CountOfZaps < LimitsOfZaps)
             {
                 ZapNextEnemy(Enemy, DistanceAttack, CountOfZaps);

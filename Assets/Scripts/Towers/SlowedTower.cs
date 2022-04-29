@@ -10,6 +10,7 @@ public class SlowedTower : Tower
     void Start()
     {
         DistanceAttack = 8f;
+        Health = 100f;
         BuildingProhibitionDistance = 3.5f;
         _slowSpeedCoef = 2.15f;
         OffsetAttackY = 1.2f;
@@ -18,6 +19,8 @@ public class SlowedTower : Tower
 
     void Update()
     {
+        hpBar.localScale = new Vector2(hpBar.localScale.x, Health / 100);
+        DestroyTower(Health);
         DisablePlayerBuildSkill();
         FindEnemies();
         Attack();

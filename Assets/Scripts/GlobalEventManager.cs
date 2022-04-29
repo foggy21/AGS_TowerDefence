@@ -7,7 +7,7 @@ public class GlobalEventManager : MonoBehaviour
     public static UnityEvent OnCloseTowerMenu = new UnityEvent();
     public static UnityEvent OnDecrementCountEnemies = new UnityEvent();
     public static UnityEvent<MoveableEnemy> OnSetEnemy = new UnityEvent<MoveableEnemy>();
-    public static UnityEvent<MoveableEnemy, int> OnGetDamage = new UnityEvent<MoveableEnemy, int>();
+    public static UnityEvent<MoveableEnemy, float> OnGetDamage = new UnityEvent<MoveableEnemy, float>();
     public static UnityEvent<int, int, float> OnSetNewStats = new UnityEvent<int, int, float>();
 
     public static void CloseTowerMenu()
@@ -25,7 +25,7 @@ public class GlobalEventManager : MonoBehaviour
         OnSetEnemy.Invoke(enemy);
     }
 
-    public static void GetDamage(MoveableEnemy enemy, int damage)
+    public static void GetDamage(MoveableEnemy enemy, float damage)
     {
         OnGetDamage.Invoke(enemy, damage);
     }
@@ -37,8 +37,7 @@ public class GlobalEventManager : MonoBehaviour
 
     private void Awake()
     {
-        OnGetDamage.AddListener(EnemyView.GetDamage);
-        OnDecrementCountEnemies.AddListener(WaveManager.DecrementCountEnemies);
-        DontDestroyOnLoad(gameObject);
+        if (!MenuManager.Restarted) OnGetDamage.AddListener(EnemyView.GetDamage);
+        if (!MenuManager.Restarted) OnDecrementCountEnemies.AddListener(WaveManager.DecrementCountEnemies);
     }
 }

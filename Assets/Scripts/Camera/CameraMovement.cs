@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    private Camera currentCamera;
     private float _dumping = 1.5f;
     private float _defaultSize = 9f;
     private float _expandedSize = 19f;
     private Vector3 _expandedCoord = new Vector3(0f, 12.75f, -10f);
-    private bool _isExpanded;
+    public static bool _isExpanded;
     private bool _isLeft;
     private Vector3 _offset = new Vector2(2f, 1f);
     private Vector3 _targetPos;
     private Vector3 _currentPos;
-    private Vector3 _lastMouse = new Vector3(0, 0, -10f);
     private Transform _playerTransform;
     private int _currentX;
     private int _lastX;
@@ -26,7 +24,6 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
-        currentCamera = gameObject.GetComponent<Camera>();
         _offset = new Vector3(Mathf.Abs(_offset.x), _offset.y);
         _isExpanded = false;
         FindPlayer(_isLeft);
@@ -116,6 +113,7 @@ public class CameraMovement : MonoBehaviour
         _targetPos = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, transform.position.y, transform.position.z);
         _currentPos = Vector3.Lerp(transform.position, _targetPos, _dumping * Time.deltaTime);
         transform.position = _currentPos;
+
     } 
     private void OnDrawGizmos()
     {

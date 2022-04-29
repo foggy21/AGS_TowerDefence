@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waveManagerView: {fileID: 2080760094036447845}
-  _textOfCountEnemies: {fileID: 0}
+  _platformManager: {fileID: 8149177343282049339, guid: 6023744231ae2614b8ebffa47cf97c8b, type: 3}
 --- !u!114 &2080760094036447845
 MonoBehaviour:
   m_ObjectHideFlags: 0

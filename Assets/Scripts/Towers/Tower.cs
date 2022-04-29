@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Tower : MonoBehaviour
 {
     protected string projectileName { get; set; }
+    protected float Health { get; set; }
     protected float OffsetAttackX { get; set; }
     protected float OffsetAttackY { get; set; }
     protected float DistanceAttack { get; set; }
@@ -12,6 +13,9 @@ public abstract class Tower : MonoBehaviour
     protected float DelayAttack { get; set; }
     protected float CurrentDelayAttack { get; set; }
     protected MoveableEnemy Enemy { get; set; }
+
+    [Header("HP Bar")]
+    [SerializeField] protected Transform hpBar;
 
     [Header("Abstract Layers")]
     [SerializeField] private LayerMask PlayerMask;
@@ -31,4 +35,19 @@ public abstract class Tower : MonoBehaviour
         }
 
     }
+
+    public void DestroyTower(float health)
+    {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void GetDamage(Tower tower, float Damage)
+    {
+        tower.Health -= Damage;
+    }
+
+
 }

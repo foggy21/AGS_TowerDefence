@@ -6,11 +6,15 @@ public class MoveableEnemy : MonoBehaviour
 {
     [SerializeField] private EnemyView _enemyView;
     private EnemyModel _enemyModel;
-    
-    
-    public Color DefaultColor { get; set; }
 
-    public int CurrentHealth { get; set; }
+    [Header("HP Bar")]
+    [SerializeField] private Transform hpBar;
+    [Header("Damage")]
+    [SerializeField] private float damage;
+    [Header("Money")]
+    [SerializeField] private GameObject money;
+    public Color DefaultColor { get; set; }
+    public float CurrentHealth { get; set; }
     public float DefaultSpeed => _enemyModel.Speed;
     public float CurrentSpeed { get; set; }
     public bool CanMove { get; set; }
@@ -18,7 +22,7 @@ public class MoveableEnemy : MonoBehaviour
     {
         _enemyModel = new EnemyModel();
         _enemyModel.LayerChecker = transform.GetChild(0);
-        _enemyModel.Health = 2;
+        _enemyModel.Health = 100f;
         _enemyModel.Sprite = GetComponentInChildren<SpriteRenderer>();
         CanMove = true;
         CurrentSpeed = DefaultSpeed;
@@ -31,9 +35,11 @@ public class MoveableEnemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        hpBar.localScale = new Vector2(hpBar.localScale.x, CurrentHealth / 100);
         if (CurrentHealth <= 0)
         {
             GlobalEventManager.DecrementCountEnemies();
+            Instantiate(money, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         if (_enemyModel.CurrentMovePoint == null)
@@ -65,6 +71,12 @@ public class MoveableEnemy : MonoBehaviour
         {
             GlobalEventManager.DecrementCountEnemies();
             Destroy(gameObject);
+        }
+
+        if (collision.tag == "Tower")
+        {
+            Tower tower = collision.GetComponent<Tower>();
+            tower.GetDamage(tower, damage);
         }
     }
 }

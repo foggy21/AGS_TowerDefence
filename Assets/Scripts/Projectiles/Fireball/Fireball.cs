@@ -5,11 +5,13 @@ using UnityEngine;
 public class Fireball : Projectile
 { 
     private const float _speed = 8f;
+    private Animator _animator;
 
     private void Awake()
     {
         GlobalEventManager.OnSetEnemy.AddListener(SetEnemy);
-        Damage = 1;
+        _animator = GetComponent<Animator>();
+        Damage = 25f;
     }
 
     private void Start()
@@ -21,11 +23,12 @@ public class Fireball : Projectile
     {
         if (CurrentEnemy != null)
         {
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, Mathf.Atan2(CurrentEnemy.transform.position.y - transform.position.y, CurrentEnemy.transform.position.x - transform.position.x) * Mathf.Rad2Deg);
             transform.position = Vector2.MoveTowards(transform.position, CurrentEnemy.transform.position, _speed * Time.deltaTime);
         }
         else
         {
-            Destroy(gameObject);
+            StartCoroutine(Explosion());
         }
     }
 
@@ -35,7 +38,14 @@ public class Fireball : Projectile
         {
             MoveableEnemy enemy = collision.GetComponent<MoveableEnemy>();
             GlobalEventManager.GetDamage(enemy, Damage);
-            Destroy(gameObject);
+            StartCoroutine(Explosion());
         }
+    }
+
+    private IEnumerator Explosion()
+    {
+        _animator.SetBool("Explosion", true);
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
     }
 }

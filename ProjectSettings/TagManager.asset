@@ -8,6 +8,14 @@ TagManager:
   - TextOfCountEnemies
   - Movepoint
   - Crystal
+  - PlatformMarker
+  - TextOfTimeInSlowMove
+  - WarningField
+  - Tower
+  - CountOfMoney
+  - Money
+  - WarningFieldMoney
+  - GameOver
   layers:
   - Default
   - TransparentFX
@@ -19,7 +27,7 @@ TagManager:
   - Ladder
   - Enemy
   - Player
-  - 
+  - MottledGround
   - 
   - 
   - 

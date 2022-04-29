@@ -7,6 +7,7 @@ public class EnemyView : MonoBehaviour
     [Header("Layers")]
     [SerializeField] private LayerMask Ground;
     [SerializeField] private LayerMask Ladder;
+    [SerializeField] private LayerMask MotteledGround;
     public GameObject[] GetMovePoints()
     {
         return GameObject.FindGameObjectsWithTag("Movepoint");
@@ -34,7 +35,6 @@ public class EnemyView : MonoBehaviour
                 closedPoint = movePoint[i].transform;
             }
         }
-
         visitedPoints.Add(closedPoint.gameObject);
         return closedPoint;
     }
@@ -55,7 +55,7 @@ public class EnemyView : MonoBehaviour
         }
     }
 
-    public static void GetDamage(MoveableEnemy enemy, int damage)
+    public static void GetDamage(MoveableEnemy enemy, float damage)
     {
         enemy.CurrentHealth -= damage;
     }
@@ -72,7 +72,6 @@ public class EnemyView : MonoBehaviour
 
     private void WalkOnPlatform(Transform point, float speed, ref bool changePoint, Transform checkLayer, float circleRadiusCheckingLayer)
     {
-        bool onGround = CheckGround(checkLayer, circleRadiusCheckingLayer);
         if (transform.position.x > point.position.x)
         {
             transform.position = Vector2.MoveTowards(transform.position, point.position, speed * Time.deltaTime);
@@ -81,7 +80,6 @@ public class EnemyView : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, point.position, speed * Time.deltaTime);
         }
-
         if (Vector2.Distance(transform.position, point.position) <= 0.5f)
         {
             ChangeNewPoint(ref changePoint);
@@ -95,7 +93,7 @@ public class EnemyView : MonoBehaviour
 
     public bool CheckGround(Transform groundChecker, float circleRadiusCheckingGround)
     {
-        return Physics2D.OverlapCircle(groundChecker.position, circleRadiusCheckingGround, Ground);
+        return Physics2D.OverlapCircle(groundChecker.position, circleRadiusCheckingGround, Ground) || Physics2D.OverlapCircle(groundChecker.position, circleRadiusCheckingGround, MotteledGround);
     }
 
     private bool CheckLadder(Transform ladderChecker, float circleRadiusCheckingLadder)

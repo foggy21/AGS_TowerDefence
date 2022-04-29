@@ -7,8 +7,8 @@ public class FireTower : Tower
     void Start()
     {
         Enemy = null;
-        OffsetAttackX = 1f;
-        OffsetAttackY = 1.2f;
+        Health = 100f;
+        OffsetAttackY = 3f;
         DistanceAttack = 10f;
         BuildingProhibitionDistance = 5f;
         DelayAttack = 1f;
@@ -16,7 +16,9 @@ public class FireTower : Tower
 
     void FixedUpdate()
     {
+        hpBar.localScale = new Vector2(hpBar.localScale.x, Health/100);
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.left * BuildingProhibitionDistance);
+        DestroyTower(Health);
         DisablePlayerBuildSkill();
         if (Enemy == null)
         {
@@ -50,11 +52,11 @@ public class FireTower : Tower
             
             if (enemy.transform.position.x > transform.position.x)
             {
-                Instantiate(projectile, new Vector2(transform.position.x + OffsetAttackX, transform.position.y + OffsetAttackY), Quaternion.identity);
+                Instantiate(projectile, new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Quaternion.identity);
             }
             else
             {
-                Instantiate(projectile, new Vector2(transform.position.x - OffsetAttackX, transform.position.y + OffsetAttackY), Quaternion.identity);
+                Instantiate(projectile, new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Quaternion.identity);
             }
             GlobalEventManager.SetEnemy(enemy); 
         }
