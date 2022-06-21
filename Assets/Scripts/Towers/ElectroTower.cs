@@ -10,10 +10,11 @@ public class ElectroTower : Tower
         Enemy = null;
         Health = 100f;
         OffsetAttackX = 1f;
+        OffsetProhibitionY = 1.2f;
         OffsetAttackY = 1.2f;
         DistanceAttack = 8f;
-        BuildingProhibitionDistance = 5f;
-        DelayAttack = 2f;
+        BuildingProhibitionDistance = 3.1f;
+        DelayAttack = 1.5f;
     }
 
     void FixedUpdate()

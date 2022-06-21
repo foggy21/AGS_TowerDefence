@@ -11,7 +11,7 @@ public class TowerManagment: MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !CameraMovement._isExpanded)
+        if (Input.GetKeyDown(KeyCode.E) && !CameraMovement._isExpanded && !MenuManager.Paused)
         {
             if (!transform.GetChild(0).gameObject.activeSelf)
             {

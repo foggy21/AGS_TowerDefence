@@ -8,9 +8,10 @@ public class FireTower : Tower
     {
         Enemy = null;
         Health = 100f;
+        OffsetProhibitionY = 1.2f;
         OffsetAttackY = 3f;
         DistanceAttack = 10f;
-        BuildingProhibitionDistance = 5f;
+        BuildingProhibitionDistance = 3.1f;
         DelayAttack = 1f;
     }
 

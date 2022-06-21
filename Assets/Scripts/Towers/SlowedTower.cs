@@ -11,13 +11,14 @@ public class SlowedTower : Tower
     {
         DistanceAttack = 8f;
         Health = 100f;
-        BuildingProhibitionDistance = 3.5f;
+        BuildingProhibitionDistance = 2.8f;
         _slowSpeedCoef = 2.15f;
+        OffsetProhibitionY = 1.2f;
         OffsetAttackY = 1.2f;
         _listOfEnemies = new List<MoveableEnemy>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         hpBar.localScale = new Vector2(hpBar.localScale.x, Health / 100);
         DestroyTower(Health);
@@ -42,7 +43,7 @@ public class SlowedTower : Tower
 
     private void FindEnemies()
     {
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.right * DistanceAttack);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.right * DistanceAttack);
         RaycastHit2D[] raycastLeft = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.left, DistanceAttack, EnemyMask);
         RaycastHit2D[] raycastRight = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.right, DistanceAttack, EnemyMask);
 

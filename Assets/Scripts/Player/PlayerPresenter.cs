@@ -65,14 +65,9 @@ public class PlayerPresenter : MonoBehaviour
 
             if (_playerModel.HorizontalInput > 0 || _playerModel.HorizontalInput < 0)
             {
-                if (_playerModel.HorizontalInput < 0)
-                {
-                    _playerModel.Sprite.flipX = true;
-                }
-                else
-                {
-                    _playerModel.Sprite.flipX = false;
-                }
+                
+                _playerModel.Sprite.flipX = _playerModel.HorizontalInput < 0;
+                
             }
         } 
         else
@@ -92,24 +87,24 @@ public class PlayerPresenter : MonoBehaviour
 
     public void BuildTower(string Tower)
     {
-        if (PlayerModel.CanBuild && PlayerModel.Money >= 30)
+        if (PlayerModel.CanBuild && PlayerModel.Money >= 40)
         {
             if (Tower == "FireTower")
             {
-                PlayerModel.Money -= 30;
+                PlayerModel.Money -= 40;
             } 
             else if (Tower == "SlowedTower")
             {
-                PlayerModel.Money -= 40;
+                PlayerModel.Money -= 50;
             }
             else if (Tower == "ElectroTower")
             {
-                PlayerModel.Money -= 50;
+                PlayerModel.Money -= 60;
             }
             _playerModel.MoneyField.text = PlayerModel.Money.ToString();
             Instantiate(Resources.Load<GameObject>(Tower), new Vector2(transform.position.x, transform.position.y - 1.32f), Quaternion.identity);
         } 
-        else if (PlayerModel.Money < 30)
+        else if (PlayerModel.Money < 40)
         {
             StartCoroutine(_playerView.ShowWarning(_playerModel.WarningFieldMoney));
         }

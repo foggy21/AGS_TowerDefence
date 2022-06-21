@@ -16,6 +16,8 @@ TagManager:
   - Money
   - WarningFieldMoney
   - GameOver
+  - WinMenu
+  - TextOfWaves
   layers:
   - Default
   - TransparentFX

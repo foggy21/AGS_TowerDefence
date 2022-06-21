@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyView: {fileID: 7530827801718203194}
   hpBar: {fileID: 8789458582013112084}
-  damage: 75
+  damage: 35
   money: {fileID: 230150743975231927, guid: 87d1fdfcee752d243956344615b96aa6, type: 3}
 --- !u!114 &7530827801718203194
 MonoBehaviour:

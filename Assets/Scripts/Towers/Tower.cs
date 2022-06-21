@@ -6,6 +6,7 @@ public abstract class Tower : MonoBehaviour
 {
     protected string projectileName { get; set; }
     protected float Health { get; set; }
+    protected float OffsetProhibitionY { get; set; }
     protected float OffsetAttackX { get; set; }
     protected float OffsetAttackY { get; set; }
     protected float DistanceAttack { get; set; }
@@ -18,16 +19,16 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] protected Transform hpBar;
 
     [Header("Abstract Layers")]
-    [SerializeField] private LayerMask PlayerMask;
+    [SerializeField] protected LayerMask PlayerMask;
     [SerializeField] protected LayerMask EnemyMask;
     public abstract void Attack(MoveableEnemy Enemy);
     public abstract MoveableEnemy FindEnemy();
 
     public void DisablePlayerBuildSkill()
     {
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.left * BuildingProhibitionDistance);
-        RaycastHit2D raycastRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.right, BuildingProhibitionDistance, PlayerMask);
-        RaycastHit2D raycastLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + OffsetAttackY), Vector2.left, BuildingProhibitionDistance, PlayerMask);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + OffsetProhibitionY), Vector2.left * BuildingProhibitionDistance);
+        RaycastHit2D raycastRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + OffsetProhibitionY), Vector2.right, BuildingProhibitionDistance, PlayerMask);
+        RaycastHit2D raycastLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + OffsetProhibitionY), Vector2.left, BuildingProhibitionDistance, PlayerMask);
 
         if (raycastLeft.collider != null || raycastRight.collider != null)
         {

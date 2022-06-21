@@ -18,7 +18,7 @@ public class Spawn : MonoBehaviour
     {
         Instantiate(Enemy, transform.position, Quaternion.identity);
         _enemiesOnScreen++;
-        yield return new WaitForSeconds(Random.Range(1f, 5f));
+        yield return new WaitForSeconds(Random.Range(0.75f, 2f));
         if (_enemiesOnScreen < LimitEnemies)
         {
             StartCoroutine(SpawnEnemy());

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Crystal : MonoBehaviour
 {
     [SerializeField] private Sprite[] _SpritesCrystal;
+    [SerializeField] private GameObject[] _fails;
     [SerializeField] private GameObject GameOverMenu;
 
     private SpriteRenderer _sprite;
@@ -20,6 +21,7 @@ public class Crystal : MonoBehaviour
         if(collision.tag == "Enemy")
         {
             _damage += 1;
+            _fails[_damage - 1].SetActive(false);
             if (_damage == 3)
             {
                 GameOverMenu.SetActive(true);

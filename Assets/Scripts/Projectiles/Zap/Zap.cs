@@ -19,7 +19,7 @@ public class Zap : Projectile
     private void Start()
     {
         Enemy = transform.parent.GetComponent<MoveableEnemy>();
-        Damage = 15f;
+        Damage = 35f;
         StartCoroutine(Electrify(Enemy));
     }
     
